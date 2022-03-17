@@ -8,7 +8,7 @@ Blah blah...
 You are free to organize your repository in any manner you choose with one
 exception: the `.vault` folder must exist at the root of the repository.
 
-This example repo uses folders to group related content:
+This example uses folders to group related content as shown below:
 
 ```text
 .
@@ -16,21 +16,23 @@ This example repo uses folders to group related content:
 │  └─ vault.yaml    # Describes the structure of this repository to FTVault.
 |                   #   See the 'Resource' section for more information.
 |
-├─ Line ABC         # Contains an example solution
+├─ line_abc         # Contains an example solution
 │  ├─ src
-│  │  ├─ proja.acd  # A sample LogixDesigner project
-│  │  └─ machines   # Contains a sample FTDS project
-│  ├─ tests         # Contains tests and simulations
-│  |  └─ sim.e3d    # A sample Emulate3D project
-│  ├─ lineabc.pdf   # Misc solution files
-│  └─ lineabc.drw
+│  │  ├─ abc.acd    # A LogixDesigner project
+│  │  └─ machines   # Contains a FTDS project
+│  |     └─ ...
+│  ├─ tests
+│  |  └─ sim.e3d    # An Emulate3D project
+│  ├─ drawing       # Contains an ePlan project
+│  |  └─ ...
+│  └─ docs.pdf      # Misc files
 |
-├─ Line XYZ         # Contains a second solution
-│     └─ ...
+├─ line_xyz         # Contains another example solution
+│  └- machine1.acd
+│  └- machine2.acd
 |
 ├─ shared           # Contains content shared among the solutions
-│  └─ src
-│     └─ shared.acd
+│  └─ mixer.acd
 |
 └─ README.md        # This file
 ```
