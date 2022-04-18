@@ -4,14 +4,24 @@ description: A description of Plant 123.
 solutions:
   - name: Line ABC
     description: A description of Line ABC.
+
     projects:
       - name: Controller ABC
         path: line_abc/src/abc.acd
         description: A LogixDesigner project for controller ABC.
+        networks:
+          root: PlantNet:10.3.5.33
+          adapters: [ENet1:entr1, CNetA:cnb1]
 
       - name: Mixer ABC
         path: shared/mixer.acd
         description: A LogixDesigner project for mixer ABC.
+        networks:
+          root: PlantNet:10.77.2.214
+          adapters: [ENet1:entr1, CNetB:cnb1]
+        aliases:
+          - mixer
+          - mixer_abc
 
       - name: Other machines
         type: ftds
@@ -33,11 +43,55 @@ solutions:
       - name: Machine 1
         path: line_xyz/machine1.acd
         description: A LogixDesigner project for Machine 1.
+        networks:
+          root: [ENet1:192.168.1.3, ENet1:192.168.5.43]
+          adapters: [CNetB:cnet_adapter]
+        aliases: m1
 
       - name: Machine 2
         path: line_xyz/machine2.acd
         description: A LogixDesigner project for Machine 2.
+        networks:
+          root: [ENet1:192.168.1.4, ENet1:192.168.5.44]
+          adapters: [CNetB:cnetBridge]
+        aliases: m2
 
       - name: Mixer XYZ
         path: shared/mixer.acd
         description: A LogixDesigner project for mixer XYZ.
+        networks:
+          root: ENet1:192.168.1.5
+          adapters: [ENet1:entr1, CNetB:cnb1]
+        aliases:
+          - mixer
+          - mixer_xyz
+
+# The `Networks` section describes the networks used by projects.
+# Projects may declare their address within each network.
+# Its purpose is to help resolve the topological relationships between projects.
+# Ethernet
+networks:
+  - name: ENet1
+    type: Ethernet
+    subnets:
+      - 192.168.1.0/24
+      - 192.168.5.0/24
+    description: |
+      This is an Ethernet network for devices in 192.168.1.xx, 192.168.5.xx.
+      All these IPs are considered to be part of the same Ethernet network and can *directly*
+      address each other (possibly via a router or switch).
+
+  - name: PlantNet
+    type: Ethernet
+    subnets: [10.0.0.0/8]
+    description: |
+      This is another Ethernet network for devices in 10.xx.xx.xx.
+      This network is not *directly* accessible from ENet1 (if it was it could be merged with ENet1).
+
+  - name: CNetA
+    type: ControlNet
+    description: This is a ControlNet network. Node have addresses 0 thru 99.
+
+  - name: CNetB
+    type: ControlNet
+    description: This is a second, separate ControlNet network
